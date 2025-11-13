@@ -1,0 +1,7 @@
+{
+  "key1": {
+    "comment": "설명을 입력하세요",
+    "default": true,
+    "overrides": []
+  }
+}
