@@ -1,0 +1,13 @@
+{
+  "application": "musinsa",
+  "environment": "dev",
+  "version": "1.0.0",
+  "features": {
+    "newFeature": true,
+    "betaMode": false
+  },
+  "settings": {
+    "timeout": 5000,
+    "retryCount": 3
+  }
+}

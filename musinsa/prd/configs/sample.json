@@ -1,0 +1,13 @@
+{
+  "application": "musinsa",
+  "environment": "prd",
+  "version": "1.0.0",
+  "features": {
+    "newFeature": false,
+    "betaMode": false
+  },
+  "settings": {
+    "timeout": 3000,
+    "retryCount": 5
+  }
+}
