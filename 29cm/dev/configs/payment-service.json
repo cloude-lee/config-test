@@ -1,7 +1,7 @@
 {
   "payment.gateway.enabled": {
     "comment": "결제 게이트웨이 활성화 여부",
-    "default": true
+    "default": false
   },
   "payment.gateway.config": {
     "comment": "결제 게이트웨이 설정 - 국가별 다른 PG사",
