@@ -1,19 +1,28 @@
 {
   "payment.gateway.enabled": {
     "comment": "결제 게이트웨이 활성화 여부",
-    "default": true
+    "default": false,
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "country": "KR"
+        },
+        "value": true
+      }
+    ]
   },
   "payment.gateway.config": {
     "comment": "결제 게이트웨이 설정 - 국가별 다른 PG사",
     "default": {
-      "provider": "DefaultPG",
+      "provider": "FIXED DefaultPG",
       "apiEndpoint": "https://api-default.pg.com/v1",
       "apiKey": "default_api_key_12345",
       "timeout": 5000,
-      "retryCount": 3,
+      "retryCount": 4,
       "retryDelayMs": 1000,
       "enableLogging": true,
-      "enableMetrics": false,
+      "enableMetrics": true,
       "connectionPoolSize": 10,
       "maxRequestsPerSecond": 100,
       "supportedMethods": "card,transfer",
@@ -458,5 +467,18 @@
       "requireReauthForHighValue": true,
       "reauthThresholdAmount": 1000000
     }
+  },
+  "my-new-key": {
+    "comment": "설명을 입력하세요",
+    "default": {
+      "field1": "sdf",
+      "field2": false
+    },
+    "overrides": []
+  },
+  "mynewkey2": {
+    "comment": "설명을 입력하세요",
+    "default": false,
+    "overrides": []
   }
 }
