@@ -1,0 +1,38 @@
+{
+  "feature_flags": {
+    "new_ui": {
+      "enabled": true,
+      "description": "새로운 UI 활성화",
+      "targeting": {
+        "default": true,
+        "rules": [
+          {
+            "condition": "user.is_beta_tester == true",
+            "value": true
+          }
+        ]
+      }
+    },
+    "ai_recommendation": {
+      "enabled": false,
+      "description": "AI 기반 상품 추천",
+      "targeting": {
+        "default": false,
+        "rules": [
+          {
+            "condition": "user.segment == 'premium'",
+            "value": true
+          }
+        ]
+      }
+    },
+    "social_login": {
+      "enabled": true,
+      "description": "소셜 로그인 활성화",
+      "targeting": {
+        "default": true,
+        "rules": []
+      }
+    }
+  }
+}

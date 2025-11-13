@@ -1,0 +1,23 @@
+{
+  "29cm.search.config": {
+    "comment": "29cm 검색 서비스 설정",
+    "default": {
+      "maxResults": 100,
+      "enabled": true,
+      "defaultSort": "popularity",
+      "timeout": 2000,
+      "cacheEnabled": true,
+      "cacheTTL": 600
+    }
+  },
+  "29cm.search.filter": {
+    "comment": "검색 필터 설정",
+    "default": {
+      "enableBrandFilter": true,
+      "enablePriceFilter": true,
+      "enableColorFilter": true,
+      "maxPrice": 1000000,
+      "minPrice": 0
+    }
+  }
+}

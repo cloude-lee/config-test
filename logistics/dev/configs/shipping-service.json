@@ -1,0 +1,12 @@
+{
+  "logistics.shipping.config": {
+    "comment": "배송 서비스 설정",
+    "default": {
+      "carriers": ["CJ대한통운", "로젠택배", "한진택배"],
+      "defaultCarrier": "CJ대한통운",
+      "processingTime": 24,
+      "enableExpressShipping": true,
+      "expressProcessingTime": 6
+    }
+  }
+}

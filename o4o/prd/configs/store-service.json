@@ -1,0 +1,21 @@
+{
+  "o4o.store.config": {
+    "comment": "O4O 매장 서비스 설정",
+    "default": {
+      "enableReservation": true,
+      "reservationTimeSlots": [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+      "maxReservationsPerSlot": 10,
+      "enableStockCheck": true,
+      "stockSyncInterval": 60
+    }
+  },
+  "o4o.pickup.config": {
+    "comment": "픽업 서비스 설정",
+    "default": {
+      "preparationTime": 30,
+      "enableExpressPickup": true,
+      "expressPreparationTime": 15,
+      "enableNotifications": true
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "flags": {
+    "auto_inventory": {
+      "_createdAt": "2025-01-10T07:00:00.000Z",
+      "_updatedAt": "2025-01-10T07:00:00.000Z",
+      "name": "auto_inventory",
+      "description": "자동 재고 관리"
+    },
+    "real_time_tracking": {
+      "_createdAt": "2025-01-10T07:00:00.000Z",
+      "_updatedAt": "2025-01-10T07:00:00.000Z",
+      "name": "real_time_tracking",
+      "description": "실시간 배송 추적"
+    }
+  },
+  "values": {
+    "auto_inventory": {
+      "_createdAt": "2025-01-10T07:00:00.000Z",
+      "_updatedAt": "2025-01-10T07:00:00.000Z",
+      "enabled": true,
+      "threshold": 10
+    },
+    "real_time_tracking": {
+      "_createdAt": "2025-01-10T07:00:00.000Z",
+      "_updatedAt": "2025-01-10T07:00:00.000Z",
+      "enabled": false
+    }
+  },
+  "version": "1"
+}
