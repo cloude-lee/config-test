@@ -2,10 +2,10 @@
 # Each application directory has designated owners who can manage configurations
 
 # 29cm application
-/29cm/ @cloude-lee @other-user
+/29cm/ @cloude-lee
 
 # Musinsa application
-/musinsa/ @cloude-lee
+/musinsa/ @other-user
 
 # Logistics application
 /logistics/ @logistics-team
