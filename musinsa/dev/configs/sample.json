@@ -1,13 +1,10 @@
 {
-  "application": "musinsa",
-  "environment": "dev",
-  "version": "1.0.0",
-  "features": {
-    "newFeature": true,
-    "betaMode": false
+  "musinsa.sample.feature": {
+    "comment": "샘플 기능 플래그",
+    "default": true
   },
-  "settings": {
-    "timeout": 5000,
-    "retryCount": 3
+  "musinsa.sample.timeout": {
+    "comment": "샘플 타임아웃 (밀리초)",
+    "default": 5000
   }
 }

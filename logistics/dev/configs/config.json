@@ -1,6 +1,10 @@
 {
-  "application": "logistics",
-  "environment": "dev",
-  "version": "1.0.0",
-  "enabled": true
+  "logistics.enabled": {
+    "comment": "물류 시스템 활성화",
+    "default": true
+  },
+  "logistics.warehouseCheckInterval": {
+    "comment": "창고 상태 체크 주기 (초)",
+    "default": 300
+  }
 }

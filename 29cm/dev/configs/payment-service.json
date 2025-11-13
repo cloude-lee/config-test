@@ -1,13 +1,26 @@
 {
-  "29cm.payment.config": {
-    "comment": "결제 서비스 설정",
-    "default": {
-      "endpoint": "https://api-dev.29cm.co.kr/payment",
-      "timeoutMs": 5000,
-      "maxRetries": 3,
-      "enabledMethods": ["card", "kakao", "naver"],
-      "minAmount": 1000,
-      "maxAmount": 10000000
-    }
+  "29cm.payment.endpoint": {
+    "comment": "결제 서비스 엔드포인트",
+    "default": "https://api-dev.29cm.co.kr/payment"
+  },
+  "29cm.payment.timeoutMs": {
+    "comment": "결제 API 타임아웃 (밀리초)",
+    "default": 5000
+  },
+  "29cm.payment.maxRetries": {
+    "comment": "결제 실패 시 재시도 횟수",
+    "default": 3
+  },
+  "29cm.payment.enabledMethods": {
+    "comment": "활성화된 결제 수단 목록",
+    "default": ["card", "kakao", "naver"]
+  },
+  "29cm.payment.minAmount": {
+    "comment": "최소 결제 금액",
+    "default": 1000
+  },
+  "29cm.payment.maxAmount": {
+    "comment": "최대 결제 금액",
+    "default": 10000000
   }
 }

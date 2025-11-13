@@ -1,6 +1,10 @@
 {
-  "application": "o4o",
-  "environment": "dev",
-  "version": "1.0.0",
-  "enabled": true
+  "o4o.example.enabled": {
+    "comment": "O4O 예제 기능 활성화",
+    "default": true
+  },
+  "o4o.example.timeout": {
+    "comment": "O4O 타임아웃 (밀리초)",
+    "default": 3000
+  }
 }

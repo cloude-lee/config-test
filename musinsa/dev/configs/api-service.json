@@ -1,21 +1,38 @@
 {
-  "musinsa.api.config": {
-    "comment": "API 서비스 설정",
-    "default": {
-      "endpoint": "https://api-dev.musinsa.com",
-      "timeoutMs": 3000,
-      "maxRetries": 3,
-      "rateLimit": 1000,
-      "enableCache": true
-    }
+  "musinsa.api.endpoint": {
+    "comment": "API 서비스 엔드포인트",
+    "default": "https://api-dev.musinsa.com"
   },
-  "musinsa.product.config": {
-    "comment": "상품 서비스 설정",
-    "default": {
-      "maxImagesPerProduct": 10,
-      "enableReviews": true,
-      "enableQnA": true,
-      "stockCheckInterval": 300
-    }
+  "musinsa.api.timeoutMs": {
+    "comment": "API 타임아웃 (밀리초)",
+    "default": 3000
+  },
+  "musinsa.api.maxRetries": {
+    "comment": "API 호출 실패 시 재시도 횟수",
+    "default": 3
+  },
+  "musinsa.api.rateLimit": {
+    "comment": "분당 API 호출 제한",
+    "default": 1000
+  },
+  "musinsa.api.enableCache": {
+    "comment": "API 응답 캐시 활성화",
+    "default": true
+  },
+  "musinsa.product.maxImagesPerProduct": {
+    "comment": "상품당 최대 이미지 수",
+    "default": 10
+  },
+  "musinsa.product.enableReviews": {
+    "comment": "리뷰 기능 활성화",
+    "default": true
+  },
+  "musinsa.product.enableQnA": {
+    "comment": "Q&A 기능 활성화",
+    "default": true
+  },
+  "musinsa.product.stockCheckInterval": {
+    "comment": "재고 확인 주기 (초)",
+    "default": 300
   }
 }
