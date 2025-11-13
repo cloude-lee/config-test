@@ -1,38 +1,455 @@
 {
-  "29cm.search.maxResults": {
-    "comment": "검색 결과 최대 개수",
-    "default": 50
+  "search.engine.config": {
+    "comment": "검색 엔진 설정 - Elasticsearch/OpenSearch 구성",
+    "default": {
+      "provider": "Elasticsearch",
+      "version": "7.17.0",
+      "clusterName": "29cm-search-dev",
+      "hosts": "es-dev-01.internal:9200:https,es-dev-02.internal:9200:https",
+      "authEnabled": true,
+      "authUsername": "elastic_user",
+      "authPassword": "dev_password_123",
+      "authApiKey": "",
+      "maxConnections": 50,
+      "minConnections": 10,
+      "maxIdleTimeMs": 60000,
+      "connectionTimeout": 3000,
+      "socketTimeout": 5000,
+      "numberOfShards": 3,
+      "numberOfReplicas": 1,
+      "refreshInterval": "1s",
+      "maxResultWindow": 10000,
+      "enableCache": true,
+      "cacheTTLSeconds": 300,
+      "bulkSize": 1000,
+      "maxConcurrentRequests": 10,
+      "requestTimeoutMs": 30000,
+      "enableSnapshotRestore": true,
+      "snapshotRepository": "s3_backup",
+      "snapshotIntervalHours": 24
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "experimentGroup": "opensearch-test",
+          "rolloutPercent": 30
+        },
+        "value": {
+          "provider": "OpenSearch",
+          "version": "2.11.0",
+          "clusterName": "29cm-search-os-dev",
+          "hosts": "opensearch-dev-01.internal:9200:https",
+          "authEnabled": true,
+          "authUsername": "admin",
+          "authPassword": "Os_dev_pass_456",
+          "authApiKey": "",
+          "maxConnections": 100,
+          "minConnections": 20,
+          "maxIdleTimeMs": 30000,
+          "connectionTimeout": 2000,
+          "socketTimeout": 4000,
+          "numberOfShards": 5,
+          "numberOfReplicas": 2,
+          "refreshInterval": "500ms",
+          "maxResultWindow": 50000,
+          "enableCache": true,
+          "cacheTTLSeconds": 600,
+          "bulkSize": 2000,
+          "maxConcurrentRequests": 20,
+          "requestTimeoutMs": 20000,
+          "enableSnapshotRestore": true,
+          "snapshotRepository": "s3_backup_opensearch",
+          "snapshotIntervalHours": 12
+        }
+      }
+    ]
   },
-  "29cm.search.enabled": {
-    "comment": "검색 기능 활성화 여부",
-    "default": true
+  "search.ranking.algorithm": {
+    "comment": "검색 랭킹 알고리즘 설정",
+    "default": {
+      "algorithm": "bm25",
+      "enableMLRanking": false,
+      "weightTextMatch": 0.4,
+      "weightPopularity": 0.3,
+      "weightRecency": 0.2,
+      "weightUserPreference": 0.1,
+      "boostFields": "title:2.0:true,brand:1.5:false,category:1.0:false",
+      "decayEnabled": true,
+      "decayField": "publishedDate",
+      "decayScale": "30d",
+      "decayOffset": "7d",
+      "decayValue": 0.5,
+      "popularityViewCount": 0.4,
+      "popularityPurchaseCount": 0.4,
+      "popularityClickRate": 0.2,
+      "minimumShouldMatch": "75%",
+      "enableSynonyms": true,
+      "synonymExpansion": "auto",
+      "enableStopwords": true,
+      "stopwordsList": "the,a,an,is,in,on"
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "country": "KR"
+        },
+        "value": {
+          "algorithm": "bm25",
+          "enableMLRanking": true,
+          "weightTextMatch": 0.5,
+          "weightPopularity": 0.3,
+          "weightRecency": 0.1,
+          "weightUserPreference": 0.1,
+          "boostFields": "title:3.0:true,brand:2.0:false,category:1.5:false,koreanKeyword:2.5:true",
+          "decayEnabled": true,
+          "decayField": "publishedDate",
+          "decayScale": "14d",
+          "decayOffset": "3d",
+          "decayValue": 0.7,
+          "popularityViewCount": 0.3,
+          "popularityPurchaseCount": 0.5,
+          "popularityClickRate": 0.2,
+          "minimumShouldMatch": "80%",
+          "enableSynonyms": true,
+          "synonymExpansion": "manual",
+          "enableStopwords": true,
+          "stopwordsList": "은,는,이,가,을,를,의"
+        }
+      },
+      {
+        "priority": 2,
+        "context": {
+          "userTier": "VIP"
+        },
+        "value": {
+          "algorithm": "neural-search",
+          "enableMLRanking": true,
+          "weightTextMatch": 0.3,
+          "weightPopularity": 0.3,
+          "weightRecency": 0.2,
+          "weightUserPreference": 0.2,
+          "boostFields": "title:3.0:true,brand:2.5:false,category:2.0:false,personalizedTags:3.0:true",
+          "decayEnabled": true,
+          "decayField": "publishedDate",
+          "decayScale": "7d",
+          "decayOffset": "1d",
+          "decayValue": 0.8,
+          "popularityViewCount": 0.2,
+          "popularityPurchaseCount": 0.6,
+          "popularityClickRate": 0.2,
+          "minimumShouldMatch": "70%",
+          "enableSynonyms": true,
+          "synonymExpansion": "auto",
+          "enableStopwords": false,
+          "stopwordsList": ""
+        }
+      }
+    ]
   },
-  "29cm.search.defaultSort": {
-    "comment": "기본 정렬 방식",
-    "default": "popularity"
+  "search.filter.configuration": {
+    "comment": "검색 필터 설정",
+    "default": {
+      "enabledFilters": "brand,price,color,size,category",
+      "priceRangeLabels": "1만원 이하,1-3만원,3-5만원,5-10만원,10만원 이상",
+      "priceRangeMin": "0,10000,30000,50000,100000",
+      "priceRangeMax": "10000,30000,50000,100000,999999999",
+      "colorNames": "black,white,red,blue,green,yellow,navy,beige",
+      "colorCodes": "#000000,#FFFFFF,#FF0000,#0000FF,#00FF00,#FFFF00,#000080,#F5F5DC",
+      "sizeOrder": "XS,S,M,L,XL,XXL,FREE",
+      "maxFiltersPerCategory": 50,
+      "showFilterCounts": true,
+      "enableMultiSelect": true,
+      "aggregationSize": 100,
+      "enableRangeSlider": true,
+      "defaultSortOrder": "popularity_desc"
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "platform": "mobile"
+        },
+        "value": {
+          "enabledFilters": "brand,price,color,category",
+          "priceRangeLabels": "3만원 이하,3-10만원,10만원 이상",
+          "priceRangeMin": "0,30000,100000",
+          "priceRangeMax": "30000,100000,999999999",
+          "colorNames": "black,white,red,blue",
+          "colorCodes": "#000000,#FFFFFF,#FF0000,#0000FF",
+          "sizeOrder": "S,M,L,XL,FREE",
+          "maxFiltersPerCategory": 20,
+          "showFilterCounts": true,
+          "enableMultiSelect": false,
+          "aggregationSize": 50,
+          "enableRangeSlider": false,
+          "defaultSortOrder": "popularity_desc"
+        }
+      }
+    ]
   },
-  "29cm.search.timeout": {
-    "comment": "검색 타임아웃 (밀리초)",
-    "default": 3000
+  "search.autocomplete.settings": {
+    "comment": "자동완성 설정",
+    "default": {
+      "enabled": true,
+      "minChars": 2,
+      "maxSuggestions": 10,
+      "debounceMs": 300,
+      "sourceProductsEnabled": true,
+      "sourceProductsWeight": 0.4,
+      "sourceProductsMaxResults": 5,
+      "sourceBrandsEnabled": true,
+      "sourceBrandsWeight": 0.3,
+      "sourceBrandsMaxResults": 3,
+      "sourceCategoriesEnabled": true,
+      "sourceCategoriesWeight": 0.2,
+      "sourceCategoriesMaxResults": 2,
+      "sourceKeywordsEnabled": true,
+      "sourceKeywordsWeight": 0.1,
+      "sourceKeywordsMaxResults": 5,
+      "highlightingEnabled": true,
+      "highlightPreTag": "<strong>",
+      "highlightPostTag": "</strong>",
+      "cachingEnabled": true,
+      "cachingTtlSeconds": 600,
+      "cachingMaxSize": 10000,
+      "popularSearchesEnabled": true,
+      "popularSearchesTopN": 10,
+      "popularSearchesUpdateIntervalHours": 1,
+      "enableTypoTolerance": true,
+      "typoMaxEditDistance": 2
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "platform": "mobile"
+        },
+        "value": {
+          "enabled": true,
+          "minChars": 1,
+          "maxSuggestions": 5,
+          "debounceMs": 200,
+          "sourceProductsEnabled": true,
+          "sourceProductsWeight": 0.5,
+          "sourceProductsMaxResults": 3,
+          "sourceBrandsEnabled": true,
+          "sourceBrandsWeight": 0.3,
+          "sourceBrandsMaxResults": 2,
+          "sourceCategoriesEnabled": false,
+          "sourceCategoriesWeight": 0.0,
+          "sourceCategoriesMaxResults": 0,
+          "sourceKeywordsEnabled": true,
+          "sourceKeywordsWeight": 0.2,
+          "sourceKeywordsMaxResults": 3,
+          "highlightingEnabled": true,
+          "highlightPreTag": "<b>",
+          "highlightPostTag": "</b>",
+          "cachingEnabled": true,
+          "cachingTtlSeconds": 900,
+          "cachingMaxSize": 5000,
+          "popularSearchesEnabled": true,
+          "popularSearchesTopN": 5,
+          "popularSearchesUpdateIntervalHours": 2,
+          "enableTypoTolerance": true,
+          "typoMaxEditDistance": 1
+        }
+      }
+    ]
   },
-  "29cm.search.cacheEnabled": {
-    "comment": "검색 결과 캐시 활성화",
-    "default": true
+  "search.personalization.engine": {
+    "comment": "개인화 검색 설정",
+    "default": {
+      "enabled": false,
+      "mlModelVersion": "v1.0",
+      "featureRecentViews": true,
+      "featurePurchaseHistory": true,
+      "featureSearchHistory": true,
+      "featureWishlist": true,
+      "featureBrowsingBehavior": false,
+      "historyRecentViewsDays": 30,
+      "historyPurchaseDays": 90,
+      "historySearchDays": 30,
+      "weightRecentViews": 0.25,
+      "weightPurchaseHistory": 0.35,
+      "weightSearchHistory": 0.2,
+      "weightWishlist": 0.15,
+      "weightBrowsingBehavior": 0.05,
+      "boostMultiplier": 1.5,
+      "minConfidenceScore": 0.3,
+      "maxPersonalizedResults": 20,
+      "fallbackToPopular": true,
+      "enableCollaborativeFiltering": false,
+      "collaborativeKNeighbors": 10
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "userTier": "VIP"
+        },
+        "value": {
+          "enabled": true,
+          "mlModelVersion": "v2.0",
+          "featureRecentViews": true,
+          "featurePurchaseHistory": true,
+          "featureSearchHistory": true,
+          "featureWishlist": true,
+          "featureBrowsingBehavior": true,
+          "historyRecentViewsDays": 90,
+          "historyPurchaseDays": 365,
+          "historySearchDays": 90,
+          "weightRecentViews": 0.2,
+          "weightPurchaseHistory": 0.4,
+          "weightSearchHistory": 0.15,
+          "weightWishlist": 0.15,
+          "weightBrowsingBehavior": 0.1,
+          "boostMultiplier": 2.0,
+          "minConfidenceScore": 0.2,
+          "maxPersonalizedResults": 50,
+          "fallbackToPopular": false,
+          "enableCollaborativeFiltering": true,
+          "collaborativeKNeighbors": 20
+        }
+      },
+      {
+        "priority": 2,
+        "context": {
+          "rolloutPercent": 50
+        },
+        "value": {
+          "enabled": true,
+          "mlModelVersion": "v1.5",
+          "featureRecentViews": true,
+          "featurePurchaseHistory": true,
+          "featureSearchHistory": true,
+          "featureWishlist": true,
+          "featureBrowsingBehavior": false,
+          "historyRecentViewsDays": 30,
+          "historyPurchaseDays": 90,
+          "historySearchDays": 30,
+          "weightRecentViews": 0.25,
+          "weightPurchaseHistory": 0.35,
+          "weightSearchHistory": 0.2,
+          "weightWishlist": 0.15,
+          "weightBrowsingBehavior": 0.05,
+          "boostMultiplier": 1.5,
+          "minConfidenceScore": 0.3,
+          "maxPersonalizedResults": 20,
+          "fallbackToPopular": true,
+          "enableCollaborativeFiltering": true,
+          "collaborativeKNeighbors": 15
+        }
+      }
+    ]
   },
-  "29cm.search.cacheTTL": {
-    "comment": "캐시 TTL (초)",
-    "default": 300
+  "search.spell.correction": {
+    "comment": "철자 교정 설정",
+    "default": {
+      "enabled": true,
+      "algorithm": "levenshtein",
+      "maxEditDistance": 2,
+      "minTermLength": 3,
+      "confidence": 0.7,
+      "suggestMode": "always",
+      "maxSuggestions": 3,
+      "sortSuggestions": "score",
+      "prefixLength": 1,
+      "customDictionaryEnabled": true,
+      "customDictionaryTerms": "29cm,무신사,스타일쉐어",
+      "customDictionaryUpdateFrequency": "daily",
+      "languageKoreanEnabled": true,
+      "languageKoreanWeight": 1.0,
+      "languageEnglishEnabled": true,
+      "languageEnglishWeight": 0.8,
+      "enablePhoneticMatching": false,
+      "phoneticAlgorithm": "metaphone"
+    }
   },
-  "29cm.search.filter.brand": {
-    "comment": "브랜드 필터 활성화",
-    "default": true
+  "search.facet.navigation": {
+    "comment": "패싯 네비게이션 설정",
+    "default": {
+      "enabled": true,
+      "facetFields": "brand,category,color,size,price_range",
+      "maxFacetValues": 20,
+      "minFacetCount": 1,
+      "sortFacetBy": "count",
+      "enableHierarchicalFacets": true,
+      "hierarchicalSeparator": ">",
+      "enableDateRangeFacets": true,
+      "dateRangeIntervals": "day,week,month,year",
+      "showEmptyFacets": false,
+      "enableFacetSearch": true,
+      "facetSearchMinChars": 2
+    }
   },
-  "29cm.search.filter.price": {
-    "comment": "가격 필터 활성화",
-    "default": true
+  "search.query.understanding": {
+    "comment": "검색 쿼리 이해 설정",
+    "default": {
+      "enableNaturalLanguage": false,
+      "nlpProvider": "none",
+      "enableIntentDetection": false,
+      "intentCategories": "buy,browse,compare,info",
+      "enableEntityExtraction": false,
+      "entityTypes": "brand,product,category,attribute",
+      "enableQueryRewriting": true,
+      "rewriteMaxAttempts": 3,
+      "enableAutoCorrection": true,
+      "autoCorrectThreshold": 0.8
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "rolloutPercent": 20
+        },
+        "value": {
+          "enableNaturalLanguage": true,
+          "nlpProvider": "openai",
+          "enableIntentDetection": true,
+          "intentCategories": "buy,browse,compare,info,gift",
+          "enableEntityExtraction": true,
+          "entityTypes": "brand,product,category,attribute,price,color",
+          "enableQueryRewriting": true,
+          "rewriteMaxAttempts": 5,
+          "enableAutoCorrection": true,
+          "autoCorrectThreshold": 0.7
+        }
+      }
+    ]
   },
-  "29cm.search.filter.color": {
-    "comment": "색상 필터 활성화",
-    "default": true
+  "search.performance.monitoring": {
+    "comment": "검색 성능 모니터링 설정",
+    "default": {
+      "enableMetrics": true,
+      "metricsInterval": 60,
+      "enableSlowQueryLog": true,
+      "slowQueryThresholdMs": 1000,
+      "enableQueryProfiling": false,
+      "samplingRate": 0.01,
+      "enableAnomalyDetection": false,
+      "anomalyThreshold": 2.0,
+      "alertChannels": "slack,email",
+      "alertSlackWebhook": "",
+      "alertEmailRecipients": "search-team@29cm.co.kr"
+    }
+  },
+  "search.caching.strategy": {
+    "comment": "검색 캐싱 전략",
+    "default": {
+      "enableResultCache": true,
+      "resultCacheTTLSeconds": 300,
+      "resultCacheMaxSize": 10000,
+      "enableQueryCache": true,
+      "queryCacheTTLSeconds": 600,
+      "queryCacheMaxSize": 5000,
+      "enableFilterCache": true,
+      "filterCacheTTLSeconds": 900,
+      "cacheInvalidationStrategy": "ttl",
+      "enableWarmupCache": false,
+      "warmupQueries": "인기검색어,신상품,베스트",
+      "cacheKeyIncludeUser": false
+    }
   }
 }

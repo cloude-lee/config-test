@@ -1,26 +1,462 @@
 {
-  "29cm.payment.endpoint": {
-    "comment": "결제 서비스 엔드포인트",
-    "default": "https://api-dev.29cm.co.kr/payment"
+  "payment.gateway.enabled": {
+    "comment": "결제 게이트웨이 활성화 여부",
+    "default": true
   },
-  "29cm.payment.timeoutMs": {
-    "comment": "결제 API 타임아웃 (밀리초)",
-    "default": 5000
+  "payment.gateway.config": {
+    "comment": "결제 게이트웨이 설정 - 국가별 다른 PG사",
+    "default": {
+      "provider": "DefaultPG",
+      "apiEndpoint": "https://api-default.pg.com/v1",
+      "apiKey": "default_api_key_12345",
+      "timeout": 5000,
+      "retryCount": 3,
+      "retryDelayMs": 1000,
+      "enableLogging": true,
+      "enableMetrics": false,
+      "connectionPoolSize": 10,
+      "maxRequestsPerSecond": 100,
+      "supportedMethods": "card,transfer",
+      "currencies": "KRW,USD",
+      "merchantId": "MERCHANT_DEFAULT",
+      "merchantName": "29cm",
+      "merchantCategory": "fashion",
+      "use3DSecure": true,
+      "fraudDetectionEnabled": false,
+      "ipWhitelist": "",
+      "webhookUrl": "https://webhook.29cm.co.kr/payment",
+      "webhookSecret": "webhook_secret_default",
+      "enableSandboxMode": false
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "country": "KR"
+        },
+        "value": {
+          "provider": "TossPayments",
+          "apiEndpoint": "https://api.tosspayments.com/v1",
+          "apiKey": "toss_live_key_sk_test_Z1aOwX7K8mxJYnGPDOzyR",
+          "timeout": 7000,
+          "retryCount": 5,
+          "retryDelayMs": 500,
+          "enableLogging": true,
+          "enableMetrics": true,
+          "connectionPoolSize": 20,
+          "maxRequestsPerSecond": 500,
+          "supportedMethods": "card,kakao,naver,transfer,virtualAccount,mobilePay",
+          "currencies": "KRW",
+          "merchantId": "MERCHANT_29CM_KR",
+          "merchantName": "29cm 코리아",
+          "merchantCategory": "fashion_retail",
+          "use3DSecure": true,
+          "fraudDetectionEnabled": true,
+          "ipWhitelist": "211.249.220.0/24,175.209.0.0/16",
+          "webhookUrl": "https://webhook.29cm.co.kr/payment/toss",
+          "webhookSecret": "webhook_secret_toss_kr",
+          "enableSandboxMode": false
+        }
+      },
+      {
+        "priority": 2,
+        "context": {
+          "country": "US"
+        },
+        "value": {
+          "provider": "Stripe",
+          "apiEndpoint": "https://api.stripe.com/v1",
+          "apiKey": "sk_test_51HvjDxExampleKey",
+          "timeout": 6000,
+          "retryCount": 5,
+          "retryDelayMs": 800,
+          "enableLogging": true,
+          "enableMetrics": true,
+          "connectionPoolSize": 15,
+          "maxRequestsPerSecond": 300,
+          "supportedMethods": "card,applePay,googlePay,link",
+          "currencies": "USD,EUR,GBP",
+          "merchantId": "MERCHANT_29CM_US",
+          "merchantName": "29cm USA",
+          "merchantCategory": "ecommerce",
+          "use3DSecure": true,
+          "fraudDetectionEnabled": true,
+          "ipWhitelist": "",
+          "webhookUrl": "https://webhook.29cm.co.kr/payment/stripe",
+          "webhookSecret": "webhook_secret_stripe_us",
+          "enableSandboxMode": false
+        }
+      },
+      {
+        "priority": 3,
+        "context": {
+          "country": "JP"
+        },
+        "value": {
+          "provider": "PayPay",
+          "apiEndpoint": "https://api.paypay.ne.jp/v1",
+          "apiKey": "paypay_key_jp_123",
+          "timeout": 6500,
+          "retryCount": 4,
+          "retryDelayMs": 600,
+          "enableLogging": true,
+          "enableMetrics": true,
+          "connectionPoolSize": 15,
+          "maxRequestsPerSecond": 350,
+          "supportedMethods": "card,paypay,linepay",
+          "currencies": "JPY",
+          "merchantId": "MERCHANT_29CM_JP",
+          "merchantName": "29cm Japan",
+          "merchantCategory": "fashion",
+          "use3DSecure": true,
+          "fraudDetectionEnabled": true,
+          "ipWhitelist": "",
+          "webhookUrl": "https://webhook.29cm.co.kr/payment/paypay",
+          "webhookSecret": "webhook_secret_paypay_jp",
+          "enableSandboxMode": false
+        }
+      }
+    ]
   },
-  "29cm.payment.maxRetries": {
-    "comment": "결제 실패 시 재시도 횟수",
-    "default": 3
+  "payment.fraud.detection.enabled": {
+    "comment": "사기 탐지 시스템 활성화 여부",
+    "default": true
   },
-  "29cm.payment.enabledMethods": {
-    "comment": "활성화된 결제 수단 목록",
-    "default": ["card", "kakao", "naver"]
+  "payment.fraud.detection.config": {
+    "comment": "사기 탐지 시스템 설정",
+    "default": {
+      "riskThreshold": 0.7,
+      "maxAmountPerTransaction": 5000000,
+      "maxDailyAmount": 10000000,
+      "maxTransactionsPerHour": 5,
+      "requireVerificationAbove": 1000000,
+      "checkIpAddress": true,
+      "checkDeviceFingerprint": true,
+      "checkVelocity": true,
+      "checkBillingAddress": true,
+      "blockedCountries": "NG,GH,RU",
+      "suspiciousPatterns": "rapid_succession,multiple_cards,mismatched_location",
+      "alertEmailEnabled": true,
+      "alertSlackEnabled": false,
+      "alertEmailRecipients": "security@29cm.co.kr",
+      "alertSlackChannel": "#fraud-alerts",
+      "actionOnHighRisk": "manual_review",
+      "autoBlockThreshold": 0.95,
+      "enableMachineLearning": false,
+      "mlModelVersion": "v1.0",
+      "scoreHistoryDays": 30
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "userTier": "VIP"
+        },
+        "value": {
+          "riskThreshold": 0.9,
+          "maxAmountPerTransaction": 50000000,
+          "maxDailyAmount": 100000000,
+          "maxTransactionsPerHour": 20,
+          "requireVerificationAbove": 10000000,
+          "checkIpAddress": false,
+          "checkDeviceFingerprint": true,
+          "checkVelocity": true,
+          "checkBillingAddress": false,
+          "blockedCountries": "",
+          "suspiciousPatterns": "multiple_cards",
+          "alertEmailEnabled": true,
+          "alertSlackEnabled": true,
+          "alertEmailRecipients": "vip-support@29cm.co.kr",
+          "alertSlackChannel": "#vip-transactions",
+          "actionOnHighRisk": "allow_with_notification",
+          "autoBlockThreshold": 0.99,
+          "enableMachineLearning": true,
+          "mlModelVersion": "v2.0",
+          "scoreHistoryDays": 90
+        }
+      },
+      {
+        "priority": 2,
+        "context": {
+          "timeRange": "02:00+09:00-06:00+09:00"
+        },
+        "value": {
+          "riskThreshold": 0.5,
+          "maxAmountPerTransaction": 2000000,
+          "maxDailyAmount": 5000000,
+          "maxTransactionsPerHour": 2,
+          "requireVerificationAbove": 500000,
+          "checkIpAddress": true,
+          "checkDeviceFingerprint": true,
+          "checkVelocity": true,
+          "checkBillingAddress": true,
+          "blockedCountries": "NG,GH,RU,CN",
+          "suspiciousPatterns": "rapid_succession,multiple_cards,mismatched_location,unusual_time",
+          "alertEmailEnabled": true,
+          "alertSlackEnabled": true,
+          "alertEmailRecipients": "security@29cm.co.kr,ops@29cm.co.kr",
+          "alertSlackChannel": "#fraud-alerts",
+          "actionOnHighRisk": "block",
+          "autoBlockThreshold": 0.8,
+          "enableMachineLearning": true,
+          "mlModelVersion": "v1.5",
+          "scoreHistoryDays": 30
+        }
+      }
+    ]
   },
-  "29cm.payment.minAmount": {
-    "comment": "최소 결제 금액",
-    "default": 1000
+  "payment.installment.enabled": {
+    "comment": "할부 결제 활성화",
+    "default": true
   },
-  "29cm.payment.maxAmount": {
-    "comment": "최대 결제 금액",
-    "default": 10000000
+  "payment.installment.config": {
+    "comment": "할부 정책 설정",
+    "default": {
+      "minAmount": 50000,
+      "maxMonths": 12,
+      "availableMonths": "2,3,4,5,6,7,8,9,10,11,12",
+      "freeInterestMonths": "2,3",
+      "freeInterestMinAmount": 100000,
+      "interestRate": 0.0599,
+      "cardIssuers": "신한카드,삼성카드,현대카드,KB국민카드",
+      "cardIssuerCodes": "SHINHAN,SAMSUNG,HYUNDAI,KOOKMIN",
+      "cardIssuerMaxMonths": "12,12,10,12",
+      "specialPromotionCards": "KOOKMIN",
+      "promotionStartDate": "2025-01-01T00:00:00+09:00",
+      "promotionEndDate": "2025-12-31T23:59:59+09:00",
+      "enablePartialInstallment": false,
+      "partialInstallmentMinAmount": 200000
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "timeRange": {
+            "start": "2025-11-20T00:00:00+09:00",
+            "end": "2025-12-10T23:59:59+09:00"
+          }
+        },
+        "value": {
+          "minAmount": 30000,
+          "maxMonths": 12,
+          "availableMonths": "2,3,4,5,6,7,8,9,10,11,12",
+          "freeInterestMonths": "2,3,4,5,6",
+          "freeInterestMinAmount": 50000,
+          "interestRate": 0.0,
+          "cardIssuers": "신한카드,삼성카드,현대카드,KB국민카드,롯데카드,우리카드",
+          "cardIssuerCodes": "SHINHAN,SAMSUNG,HYUNDAI,KOOKMIN,LOTTE,WOORI",
+          "cardIssuerMaxMonths": "12,12,12,12,12,12",
+          "specialPromotionCards": "SHINHAN,KOOKMIN,LOTTE",
+          "promotionStartDate": "2025-11-20T00:00:00+09:00",
+          "promotionEndDate": "2025-12-10T23:59:59+09:00",
+          "enablePartialInstallment": true,
+          "partialInstallmentMinAmount": 100000
+        }
+      }
+    ]
+  },
+  "payment.refund.auto.enabled": {
+    "comment": "자동 환불 활성화",
+    "default": true
+  },
+  "payment.refund.instant.enabled": {
+    "comment": "즉시 환불 활성화",
+    "default": false,
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "userTier": "VIP"
+        },
+        "value": true
+      }
+    ]
+  },
+  "payment.refund.config": {
+    "comment": "환불 처리 설정",
+    "default": {
+      "instantRefundMaxAmount": 100000,
+      "processingTimeMinutes": 30,
+      "partialRefundAllowed": true,
+      "refundFeePercentage": 0.0,
+      "minimumRefundAmount": 1000,
+      "refundMethods": "original,point,account",
+      "requireReason": true,
+      "allowedReasons": "change_of_mind,product_defect,wrong_item,late_delivery,other",
+      "blackoutPeriodName": "시스템 점검",
+      "blackoutPeriodStart": "02:00+09:00",
+      "blackoutPeriodEnd": "04:00+09:00",
+      "blackoutPeriodRecurring": "daily",
+      "notifyCustomer": true,
+      "notifyMerchant": true,
+      "notificationChannels": "email,sms,push",
+      "refundApprovalRequired": false,
+      "approvalThresholdAmount": 0,
+      "maxRefundsPerDay": 10
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "userTier": "VIP"
+        },
+        "value": {
+          "instantRefundMaxAmount": 1000000,
+          "processingTimeMinutes": 5,
+          "partialRefundAllowed": true,
+          "refundFeePercentage": 0.0,
+          "minimumRefundAmount": 100,
+          "refundMethods": "original,point,account",
+          "requireReason": false,
+          "allowedReasons": "change_of_mind,product_defect,wrong_item,late_delivery,other",
+          "blackoutPeriodName": "",
+          "blackoutPeriodStart": "",
+          "blackoutPeriodEnd": "",
+          "blackoutPeriodRecurring": "",
+          "notifyCustomer": true,
+          "notifyMerchant": true,
+          "notificationChannels": "email,sms,push,kakaotalk",
+          "refundApprovalRequired": false,
+          "approvalThresholdAmount": 0,
+          "maxRefundsPerDay": 100
+        }
+      }
+    ]
+  },
+  "payment.subscription.enabled": {
+    "comment": "구독 결제 활성화",
+    "default": false,
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "rolloutPercent": 50
+        },
+        "value": true
+      }
+    ]
+  },
+  "payment.subscription.config": {
+    "comment": "구독 결제 설정",
+    "default": {
+      "billingCycles": "monthly,quarterly,yearly",
+      "defaultCycle": "monthly",
+      "trialPeriodDays": 14,
+      "allowTrialCancel": true,
+      "gracePeriodDays": 3,
+      "maxRetryAttempts": 3,
+      "retryScheduleDays": "1,3,5",
+      "autoRenew": true,
+      "prorationEnabled": true,
+      "immediateCancelEnabled": false,
+      "endOfPeriodCancelEnabled": true,
+      "refundUnusedPeriod": false,
+      "discountQuarterly": 0.1,
+      "discountYearly": 0.2,
+      "tierNames": "Basic,Premium",
+      "tierPricesMonthly": "9900,19900",
+      "tierFeaturesBasic": "basic_delivery,member_discount",
+      "tierFeaturesPremium": "free_delivery,member_discount,early_access,exclusive_deals",
+      "tierMaxOrdersBasic": 10,
+      "tierMaxOrdersPremium": -1,
+      "paymentFailureNotifyDaysBefore": 3,
+      "suspensionAfterFailedAttempts": 3
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "rolloutPercent": 50
+        },
+        "value": {
+          "billingCycles": "monthly,quarterly,yearly",
+          "defaultCycle": "monthly",
+          "trialPeriodDays": 30,
+          "allowTrialCancel": true,
+          "gracePeriodDays": 7,
+          "maxRetryAttempts": 5,
+          "retryScheduleDays": "1,3,5,7,10",
+          "autoRenew": true,
+          "prorationEnabled": true,
+          "immediateCancelEnabled": true,
+          "endOfPeriodCancelEnabled": true,
+          "refundUnusedPeriod": true,
+          "discountQuarterly": 0.15,
+          "discountYearly": 0.25,
+          "tierNames": "Basic,Premium,Enterprise",
+          "tierPricesMonthly": "9900,19900,39900",
+          "tierFeaturesBasic": "basic_delivery,member_discount",
+          "tierFeaturesPremium": "free_delivery,member_discount,early_access,exclusive_deals",
+          "tierMaxOrdersBasic": 15,
+          "tierMaxOrdersPremium": -1,
+          "paymentFailureNotifyDaysBefore": 7,
+          "suspensionAfterFailedAttempts": 5
+        }
+      }
+    ]
+  },
+  "payment.voucher.enabled": {
+    "comment": "상품권/쿠폰 결제 활성화",
+    "default": true
+  },
+  "payment.voucher.config": {
+    "comment": "상품권/쿠폰 결제 설정",
+    "default": {
+      "acceptedTypes": "gift_certificate,coupon,point",
+      "maxVouchersPerTransaction": 5,
+      "allowPartialPayment": true,
+      "minVoucherAmount": 1000,
+      "maxVoucherAmount": 500000,
+      "expiryWarningDays": 7,
+      "autoApplyBestDiscount": true,
+      "stackable": true,
+      "maxStackCount": 3,
+      "requireAuthentication": false,
+      "validationTimeout": 5000
+    }
+  },
+  "payment.currency.exchange.enabled": {
+    "comment": "환율 변환 활성화",
+    "default": true
+  },
+  "payment.currency.exchange.config": {
+    "comment": "환율 및 다중 통화 설정",
+    "default": {
+      "baseCurrency": "KRW",
+      "supportedCurrencies": "KRW,USD,JPY,EUR,CNY",
+      "exchangeRateProvider": "fixer.io",
+      "exchangeRateApiKey": "fixer_api_key_dev",
+      "cacheUpdateIntervalMinutes": 60,
+      "manualRateOverride": false,
+      "manualRates": "",
+      "displayPrecision": 2,
+      "roundingMode": "half_up",
+      "showOriginalPrice": true,
+      "conversionFeePercentage": 0.03
+    }
+  },
+  "payment.security.tokenization.enabled": {
+    "comment": "카드 토큰화 활성화",
+    "default": true
+  },
+  "payment.security.two.factor.auth.enabled": {
+    "comment": "2단계 인증 활성화",
+    "default": false
+  },
+  "payment.security.config": {
+    "comment": "결제 보안 및 암호화 설정",
+    "default": {
+      "tokenProvider": "internal",
+      "encryptionAlgorithm": "AES-256-GCM",
+      "keyRotationDays": 90,
+      "enablePciCompliance": true,
+      "storeCvv": false,
+      "maskCardNumber": true,
+      "maskedDigits": 12,
+      "twoFactorMethods": "sms,email",
+      "sessionTimeoutMinutes": 30,
+      "requireReauthForHighValue": true,
+      "reauthThresholdAmount": 1000000
+    }
   }
 }
