@@ -1,0 +1,14 @@
+# OneConf Config Owners
+# Each application directory has designated owners who can manage configurations
+
+# 29cm application
+/29cm/ @cloude-lee @other-user
+
+# Musinsa application
+/musinsa/ @cloude-lee
+
+# Logistics application
+/logistics/ @logistics-team
+
+# O4O application
+/o4o/ @o4o-team
