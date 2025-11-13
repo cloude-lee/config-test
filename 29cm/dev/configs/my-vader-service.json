@@ -1,0 +1,7 @@
+{
+  "example-key": {
+    "comment": "설명을 입력하세요",
+    "default": "",
+    "overrides": []
+  }
+}
