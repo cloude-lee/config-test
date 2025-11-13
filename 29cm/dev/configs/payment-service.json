@@ -1,10 +1,19 @@
 {
   "payment.gateway.enabled": {
     "comment": "결제 게이트웨이 활성화 여부",
-    "default": true
+    "default": false,
+    "overrides": [
+      {
+        "priority": 1,
+        "context": {
+          "country": "CH"
+        },
+        "value": true
+      }
+    ]
   },
   "payment.gateway.config": {
-    "comment": "결제 게이트웨이 설정 - 국가별 다른 PG사",
+    "comment": "설명바꿈 - 결제 게이트웨이 설정 - 국가별 다른 PG사",
     "default": {
       "provider": "DefaultPG",
       "apiEndpoint": "https://api-default.pg.com/v1",
@@ -125,7 +134,7 @@
   "payment.fraud.detection.config": {
     "comment": "사기 탐지 시스템 설정",
     "default": {
-      "riskThreshold": 0.7,
+      "riskThreshold": 0.1,
       "maxAmountPerTransaction": 5000000,
       "maxDailyAmount": 10000000,
       "maxTransactionsPerHour": 5,
@@ -144,7 +153,8 @@
       "autoBlockThreshold": 0.95,
       "enableMachineLearning": false,
       "mlModelVersion": "v1.0",
-      "scoreHistoryDays": 30
+      "scoreHistoryDays": 30,
+      "newField": "mydata"
     },
     "overrides": [
       {
@@ -172,7 +182,8 @@
           "autoBlockThreshold": 0.99,
           "enableMachineLearning": true,
           "mlModelVersion": "v2.0",
-          "scoreHistoryDays": 90
+          "scoreHistoryDays": 90,
+          "newField": "mydata1"
         }
       },
       {
