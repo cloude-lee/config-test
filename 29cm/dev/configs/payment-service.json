@@ -1,18 +1,18 @@
 {
   "payment.gateway.enabled": {
     "comment": "결제 게이트웨이 활성화 여부",
-    "default": true
+    "default": false
   },
   "payment.gateway.config": {
     "comment": "결제 게이트웨이 설정 - 국가별 다른 PG사",
     "default": {
-      "provider": "DefaultPG",
+      "provider": "ㅁaDefaultPG",
       "apiEndpoint": "https://api-default.pg.com/v1",
       "apiKey": "default_api_key_12345",
-      "timeout": 5000,
+      "timeout": 5004,
       "retryCount": 3,
       "retryDelayMs": 1000,
-      "enableLogging": true,
+      "enableLogging": false,
       "enableMetrics": false,
       "connectionPoolSize": 10,
       "maxRequestsPerSecond": 100,
