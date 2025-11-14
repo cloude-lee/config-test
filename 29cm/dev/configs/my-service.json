@@ -14,5 +14,14 @@
         "value": true
       }
     ]
+  },
+  "key2": {
+    "comment": "설명을 입력하세요",
+    "default": {
+      "field1": "str",
+      "field2": 3,
+      "field3": false
+    },
+    "overrides": []
   }
 }
