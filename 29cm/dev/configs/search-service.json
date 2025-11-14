@@ -1,7 +1,7 @@
 {
   "search.enabled": {
     "comment": "검색 기능 전체 활성화 여부",
-    "default": true
+    "default": false
   },
   "search.engine.config": {
     "comment": "검색 엔진 설정 - Elasticsearch/OpenSearch 구성",
@@ -279,7 +279,7 @@
           "sourceBrandsWeight": 0.3,
           "sourceBrandsMaxResults": 2,
           "sourceCategoriesEnabled": false,
-          "sourceCategoriesWeight": 0.0,
+          "sourceCategoriesWeight": 0,
           "sourceCategoriesMaxResults": 0,
           "sourceKeywordsEnabled": true,
           "sourceKeywordsWeight": 0.2,
@@ -375,7 +375,7 @@
           "weightSearchHistory": 0.15,
           "weightWishlist": 0.15,
           "weightBrowsingBehavior": 0.1,
-          "boostMultiplier": 2.0,
+          "boostMultiplier": 2,
           "minConfidenceScore": 0.2,
           "maxPersonalizedResults": 50,
           "fallbackToPopular": false,
@@ -407,7 +407,7 @@
       "customDictionaryTerms": "29cm,무신사,스타일쉐어",
       "customDictionaryUpdateFrequency": "daily",
       "languageKoreanEnabled": true,
-      "languageKoreanWeight": 1.0,
+      "languageKoreanWeight": 1,
       "languageEnglishEnabled": true,
       "languageEnglishWeight": 0.8,
       "phoneticAlgorithm": "metaphone"
@@ -516,7 +516,7 @@
       "slowQueryThresholdMs": 1000,
       "enableQueryProfiling": false,
       "samplingRate": 0.01,
-      "anomalyThreshold": 2.0,
+      "anomalyThreshold": 2,
       "alertChannels": "slack,email",
       "alertSlackWebhook": "",
       "alertEmailRecipients": "search-team@29cm.co.kr"
