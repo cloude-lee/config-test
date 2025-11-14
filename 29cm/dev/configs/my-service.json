@@ -1,7 +1,7 @@
 {
   "key1": {
-    "comment": "설명을 입력하세요",
-    "default": false,
+    "comment": "테스트용 키 입니다.",
+    "default": true,
     "overrides": []
   }
 }
