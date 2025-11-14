@@ -1,7 +1,7 @@
 {
   "key1": {
     "comment": "테스트용 키 입니다.",
-    "default": true,
+    "default": false,
     "overrides": [
       {
         "priority": 1,
