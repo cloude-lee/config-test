@@ -6,7 +6,7 @@
       "version": "1.0",
       "maxRecommendations": 20,
       "includePersonalization": true,
-      "fallbackToBestSellers": true,
+      "fallbackToBestSellers": false,
       "excludeOutOfStock": true,
       "excludeLowRated": true,
       "minRating": 3.5,
@@ -211,9 +211,9 @@
     ]
   },
   "_metadata" : {
-    "version" : 2,
-    "updatedAt" : "2025-11-19T13:52:01.728500Z",
+    "version" : 3,
+    "updatedAt" : "2025-11-19T14:00:17.794091Z",
     "updatedBy" : "cloude-lee",
-    "changeDescription" : "includePersonalization to true"
+    "changeDescription" : "2"
   }
 }
