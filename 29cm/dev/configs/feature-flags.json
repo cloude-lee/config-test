@@ -5,7 +5,7 @@
       "algorithm": "collaborative-filtering",
       "version": "1.0",
       "maxRecommendations": 20,
-      "includePersonalization": true,
+      "includePersonalization": false,
       "fallbackToBestSellers": true,
       "excludeOutOfStock": true,
       "excludeLowRated": true,
@@ -213,8 +213,8 @@
 ,
   "_metadata" : {
     "version" : 1,
-    "updatedAt" : "2025-11-19T09:01:19.853918Z",
+    "updatedAt" : "2025-11-19T13:49:25.957440Z",
     "updatedBy" : "cloude-lee",
-    "changeDescription" : "my pr title"
+    "changeDescription" : "my rollback"
   }
 }
