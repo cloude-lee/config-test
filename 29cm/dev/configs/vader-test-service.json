@@ -1,0 +1,152 @@
+{
+  "api.vader.config": {
+    "comment": "API 설정 (SimpleFeatureService 예제 - POJO)",
+    "default": {
+      "endpoint": "from generated local",
+      "timeoutMs": 3001,
+      "maxRetries": 4,
+      "doubleVal": 3.2,
+      "boolVal": false,
+      "timeVal": "2025-01-15T10:30:00+09:00"
+    }
+  },
+  "features.newCheckoutUI": {
+    "comment": "새로운 체크아웃 UI 사용 여부 (SimpleFeatureService 예제)",
+    "default": true
+  },
+  "features.searchEnabled": {
+    "comment": "검색 기능 활성화 여부 (SimpleFeatureService 예제)",
+    "default": true
+  },
+  "features.newBanner": {
+    "comment": "새로운 배너 표시 여부 (SimpleFeatureService 예제)",
+    "default": true
+  },
+  "features.recommendations": {
+    "comment": "추천 섹션 표시 여부 (SimpleFeatureService 예제)",
+    "default": true
+  },
+  "system.debugMode": {
+    "comment": "디버그 모드 활성화 여부 (SimpleFeatureService 예제)",
+    "default": false
+  },
+  "search.config": {
+    "comment": "검색 설정 (SimpleFeatureService 예제 - POJO)",
+    "default": {
+      "maxResults": 10,
+      "enabled": true,
+      "defaultSort": "relevance"
+    }
+  },
+  "api.config": {
+    "comment": "API 설정 (SimpleFeatureService 예제 - POJO)",
+    "default": {
+      "endpoint": "https://api.example.com",
+      "timeoutMs": 3000,
+      "maxRetries": 3
+    }
+  },
+  "feature.newCheckout": {
+    "comment": "새로운 결제 플로우 활성화 여부",
+    "default": false,
+    "overrides": [
+      {
+        "priority": 1,
+        "context": { "country": "KR" },
+        "value": true
+      },
+      {
+        "priority": 2,
+        "context": { "userId": "test-user-1" },
+        "value": true
+      }
+    ]
+  },
+  "feature.freeShipping": {
+    "comment": "무료배송 제공 여부",
+    "default": false,
+    "overrides": [
+      {
+        "priority": 1,
+        "context": { "country": "KR" },
+        "value": true
+      }
+    ]
+  },
+  "payment.gatewaySettings": {
+    "comment": "국가별 결제 게이트웨이 설정",
+    "default": {
+      "provider": "DefaultPG",
+      "apiKey": "default_api_key",
+      "apiUrl": "https://api.defaultpg.com",
+      "timeoutMs": 3000,
+      "maxRetries": 3
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": { "country": "KR" },
+        "value": {
+          "provider": "TossPayments",
+          "apiKey": "test_toss_api_key",
+          "apiUrl": "https://api.tosspayments.com/v1",
+          "timeoutMs": 5000,
+          "maxRetries": 5,
+          "supportedMethods": ["card", "transfer", "virtualAccount"]
+        }
+      },
+      {
+        "priority": 2,
+        "context": { "country": "US" },
+        "value": {
+          "provider": "Stripe",
+          "apiKey": "test_stripe_api_key",
+          "apiUrl": "https://api.stripe.com/v1",
+          "timeoutMs": 4000,
+          "maxRetries": 5,
+          "supportedMethods": ["card", "applePay", "googlePay"]
+        }
+      },
+      {
+        "priority": 3,
+        "context": { "country": "JP" },
+        "value": {
+          "provider": "PayJP",
+          "apiKey": "test_payjp_api_key",
+          "apiUrl": "https://api.pay.jp/v1",
+          "timeoutMs": 4000,
+          "maxRetries": 4,
+          "supportedMethods": ["card", "konbini"]
+        }
+      }
+    ]
+  },
+  "recommendation.config": {
+    "comment": "추천 엔진 설정",
+    "default": {
+      "engineVersion": "v1"
+    },
+    "overrides": [
+      {
+        "priority": 1,
+        "context": { "experimentGroup": "A" },
+        "value": {
+          "engineVersion": "v2"
+        }
+      },
+      {
+        "priority": 2,
+        "context": { "experimentGroup": "B" },
+        "value": {
+          "engineVersion": "v3"
+        }
+      }
+    ]
+  },
+  "discount.config": {
+    "comment": "할인 설정",
+    "default": {
+      "rate": 0.05
+    }
+  }
+}
