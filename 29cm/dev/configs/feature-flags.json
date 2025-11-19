@@ -5,7 +5,7 @@
       "algorithm": "collaborative-filtering",
       "version": "1.0",
       "maxRecommendations": 20,
-      "includePersonalization": true,
+      "includePersonalization": false,
       "fallbackToBestSellers": true,
       "excludeOutOfStock": true,
       "excludeLowRated": true,
@@ -209,11 +209,12 @@
         }
       }
     ]
-  },
+  }
+,
   "_metadata" : {
-    "version" : 2,
-    "updatedAt" : "2025-11-19T13:52:01.728500Z",
+    "version" : 1,
+    "updatedAt" : "2025-11-19T13:57:24.182755Z",
     "updatedBy" : "cloude-lee",
-    "changeDescription" : "includePersonalization to true"
+    "changeDescription" : "롤백"
   }
 }
