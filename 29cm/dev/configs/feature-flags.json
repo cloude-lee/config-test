@@ -212,8 +212,8 @@
   },
   "_metadata" : {
     "version" : 2,
-    "updatedAt" : "2025-11-19T13:52:01.728500Z",
+    "updatedAt" : "2025-11-19T13:52:50.468525Z",
     "updatedBy" : "cloude-lee",
-    "changeDescription" : "includePersonalization to true"
+    "changeDescription" : "rollback"
   }
 }
