@@ -5,7 +5,7 @@
       "algorithm": "collaborative-filtering",
       "version": "1.0",
       "maxRecommendations": 20,
-      "includePersonalization": true,
+      "includePersonalization": false,
       "fallbackToBestSellers": true,
       "excludeOutOfStock": true,
       "excludeLowRated": true,
@@ -142,78 +142,12 @@
         }
       }
     ]
-  },
-  "feature.shipping.policy": {
-    "comment": "배송 정책 설정",
-    "default": {
-      "freeShippingThreshold": 50000,
-      "standardFee": 3000,
-      "expressFee": 5000,
-      "standardDeliveryDays": 3,
-      "expressDeliveryDays": 1,
-      "availableServices": "standard,express,pickup",
-      "regionMetroName": "수도권",
-      "regionMetroCities": "서울,경기,인천",
-      "regionMetroAdditionalFee": 0,
-      "regionMetroNextDayAvailable": true,
-      "regionNationwideName": "전국",
-      "regionNationwideAdditionalFee": 2000,
-      "regionNationwideNextDayAvailable": false,
-      "regionIslandName": "도서산간",
-      "regionIslandCities": "제주,울릉도",
-      "regionIslandAdditionalFee": 5000,
-      "regionIslandNextDayAvailable": false,
-      "restrictionMaxWeight": 30.0,
-      "restrictionMaxLength": 100,
-      "restrictionMaxWidth": 100,
-      "restrictionMaxHeight": 100,
-      "restrictionProhibitedItems": "liquid,dangerous",
-      "trackingEnabled": true,
-      "trackingSmsNotification": true,
-      "trackingPushNotification": true,
-      "trackingUpdateFrequencyMinutes": 60
-    },
-    "overrides": [
-      {
-        "priority": 1,
-        "context": {
-          "userTier": "VIP"
-        },
-        "value": {
-          "freeShippingThreshold": 0,
-          "standardFee": 0,
-          "expressFee": 0,
-          "standardDeliveryDays": 2,
-          "expressDeliveryDays": 1,
-          "availableServices": "standard,express,pickup,whiteglove",
-          "regionMetroName": "수도권",
-          "regionMetroCities": "서울,경기,인천",
-          "regionMetroAdditionalFee": 0,
-          "regionMetroNextDayAvailable": true,
-          "regionNationwideName": "전국",
-          "regionNationwideAdditionalFee": 0,
-          "regionNationwideNextDayAvailable": true,
-          "regionIslandName": "도서산간",
-          "regionIslandCities": "제주,울릉도",
-          "regionIslandAdditionalFee": 0,
-          "regionIslandNextDayAvailable": false,
-          "restrictionMaxWeight": 50.0,
-          "restrictionMaxLength": 150,
-          "restrictionMaxWidth": 150,
-          "restrictionMaxHeight": 150,
-          "restrictionProhibitedItems": "",
-          "trackingEnabled": true,
-          "trackingSmsNotification": true,
-          "trackingPushNotification": true,
-          "trackingUpdateFrequencyMinutes": 30
-        }
-      }
-    ]
-  },
+  }
+,
   "_metadata" : {
-    "version" : 2,
-    "updatedAt" : "2025-11-19T13:52:01.728500Z",
+    "version" : 3,
+    "updatedAt" : "2025-11-20T07:11:20.199155Z",
     "updatedBy" : "cloude-lee",
-    "changeDescription" : "includePersonalization to true"
+    "changeDescription" : "ar"
   }
 }
