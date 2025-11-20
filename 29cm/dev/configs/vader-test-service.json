@@ -2,8 +2,8 @@
   "api.vader.config": {
     "comment": "API 설정 (SimpleFeatureService 예제 - POJO)",
     "default": {
-      "endpoint": "from generated local",
-      "timeoutMs": 3001,
+      "endpoint": "from github",
+      "timeoutMs": 3002,
       "maxRetries": 4,
       "doubleVal": 3.2,
       "boolVal": false,
@@ -13,5 +13,12 @@
   "features.newCheckoutUI": {
     "comment": "새로운 체크아웃 UI 사용 여부 (SimpleFeatureService 예제)",
     "default": true
+  }
+,
+  "_metadata" : {
+    "version" : 1,
+    "updatedAt" : "2025-11-20T08:05:35.776218Z",
+    "updatedBy" : "cloude-lee",
+    "changeDescription" : "pr"
   }
 }
